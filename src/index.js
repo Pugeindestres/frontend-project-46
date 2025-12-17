@@ -1,0 +1,3 @@
+const genDiff = (filepath1, filepath2) => `Difference between ${filepath1} and ${filepath2}`;
+
+export default genDiff;

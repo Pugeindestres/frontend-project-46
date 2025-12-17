@@ -1,0 +1,14 @@
+env:
+  node: true
+  es2021: true
+extends: 'airbnb-base'
+parserOptions:
+  ecmaVersion: 'latest'
+  sourceType: 'module'
+rules:
+  import/extensions: 'off'
+  
+
+  no-console: 'off'
+  import/no-unresolved: 'off'
+  no-underscore-dangle: 'off'
