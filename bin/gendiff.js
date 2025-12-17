@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+/* @jest-environment node */
+'use strict';
 
-// Убедитесь, что путь правильный
-import setupCLI from '../src/cli.js';
+import runCLI from '../src/cli.js';
 
-const program = setupCLI();
-program.parse(process.argv);
+runCLI();

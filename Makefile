@@ -1,8 +1,11 @@
 install:
 	npm ci
 
-publish:
-	npm publish --dry-run
+build:
+	npm run build
+
+test:
+	npm test
 
 lint:
 	npx eslint .
@@ -10,5 +13,11 @@ lint:
 lint-fix:
 	npx eslint --fix .
 
-test:
-	npm test
+gendiff:
+	node bin/gendiff.js
+
+help:
+	node bin/gendiff.js -h
+
+version:
+	node bin/gendiff.js -V
