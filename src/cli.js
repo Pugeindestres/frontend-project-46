@@ -29,7 +29,8 @@ const runCLI = () => {
 
         const diff = genDiff(finalPath1, finalPath2, options.format)
         console.log(diff)
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Error:', error.message)
         process.exit(1)
       }
@@ -37,7 +38,8 @@ const runCLI = () => {
 
   try {
     program.parse(process.argv)
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(error.message)
     program.outputHelp()
     process.exit(1)
