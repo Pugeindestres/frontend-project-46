@@ -1,4 +1,4 @@
-const isObject = (value) => value !== null && typeof value === 'object'
+const isObject = value => value !== null && typeof value === 'object'
 
 const formatValue = (value, depth) => {
   if (!isObject(value)) {
