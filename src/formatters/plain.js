@@ -1,4 +1,4 @@
-const isObject = (value) => value !== null && typeof value === 'object'
+const isObject = value => value !== null && typeof value === 'object'
 
 const formatValue = (value) => {
   if (isObject(value)) {
@@ -14,7 +14,7 @@ const buildPath = (path, key) => (path ? `${path}.${key}` : key)
 
 const formatPlain = (diff, parentPath = '') => {
   const lines = diff
-    .filter((node) => node.type !== 'unchanged')
+    .filter(node => node.type !== 'unchanged')
     .map((node) => {
       const path = buildPath(parentPath, node.key)
 
