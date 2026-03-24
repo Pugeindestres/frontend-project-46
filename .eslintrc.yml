@@ -7,8 +7,12 @@ parserOptions:
   sourceType: 'module'
 rules:
   import/extensions: 'off'
-  
-
   no-console: 'off'
   import/no-unresolved: 'off'
   no-underscore-dangle: 'off'
+  semi: ['error', 'never']
+  arrow-parens: ['error', 'as-needed']
+  brace-style: ['error', 'stroustrup']
+  eol-last: ['error', 'always']
+  indent: ['error', 2]
+  comma-dangle: ['error', 'always-multiline']
