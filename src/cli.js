@@ -13,10 +13,12 @@ const runCLI = () => {
         const options = program.opts()
 
         const addPrefix = filepath => {
-          if (filepath.startsWith('/')
-              || filepath.startsWith('./')
-              || filepath.startsWith('../')
-              || filepath.includes('/')) {
+          if (
+            filepath.startsWith('/')
+            || filepath.startsWith('./')
+            || filepath.startsWith('../')
+            || filepath.includes('/')
+          ) {
             return filepath
           }
           return `__fixtures__/${filepath}`
