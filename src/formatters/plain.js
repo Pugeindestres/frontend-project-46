@@ -14,25 +14,25 @@ const buildPath = (path, key) => (path ? `${path}.${key}` : key)
 
 const formatPlain = (diff, parentPath = '') => {
   const lines = diff
-    .filter(node => node.type !== 'unchanged')
-    .map(node => {
-      const path = buildPath(parentPath, node.key)
+    .filter((node) => node.type !== 'unchanged')
+    .map((node) => {
+      const path = buildPath(parentPath, node.key);
 
       switch (node.type) {
-      case 'added':
-        return `Property '${path}' was added with value: ${formatValue(node.value)}`
-      case 'removed':
-        return `Property '${path}' was removed`
-      case 'changed':
-        return `Property '${path}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`
-      case 'nested':
-        return formatPlain(node.children, path)
-      default:
-        return ''
+        case 'added':
+          return `Property '${path}' was added with value: ${formatValue(node.value)}`;
+        case 'removed':
+          return `Property '${path}' was removed`;
+        case 'changed':
+          return `Property '${path}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
+        case 'nested':
+          return formatPlain(node.children, path);
+        default:
+          return '';
       }
-    })
+    });
 
-  return lines.join('\n')
-}
+  return lines.join('\n');
+};
 
 export default formatPlain

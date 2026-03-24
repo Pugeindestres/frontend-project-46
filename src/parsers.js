@@ -35,18 +35,18 @@ const parseYAML = filepath => {
  * @returns {object} - распарсенные данные
  * @throws {Error} - если формат файла не поддерживается
  */
-const parseFile = filepath => {
-  const extension = getFileExtension(filepath)
+const parseFile = (filepath) => {
+  const extension = getFileExtension(filepath);
 
   switch (extension) {
-  case 'json':
-    return parseJSON(filepath)
-  case 'yml':
-  case 'yaml':
-    return parseYAML(filepath)
-  default:
-    throw new Error(`Unsupported file format: ${extension}. Supported formats: JSON, YAML`)
+    case 'json':
+      return parseJSON(filepath);
+    case 'yml':
+    case 'yaml':
+      return parseYAML(filepath);
+    default:
+      throw new Error(`Unsupported file format: ${extension}. Supported formats: JSON, YAML`);
   }
-}
+};
 
 export default parseFile
