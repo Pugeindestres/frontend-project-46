@@ -31,4 +31,13 @@ help:
 version:
 	node bin/gendiff.js -V
 
+test-json:
+	node bin/gendiff.js __fixtures__/file1.json __fixtures__/file2.json -f json
+
+test-plain:
+	node bin/gendiff.js __fixtures__/file1.json __fixtures__/file2.json -f plain
+
+test-stylish:
+	node bin/gendiff.js __fixtures__/file1.json __fixtures__/file2.json -f stylish
+
 .PHONY: install test test-coverage test-watch lint lint-fix test-json test-yaml gendiff help version

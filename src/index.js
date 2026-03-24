@@ -1,57 +1,60 @@
 import path from 'path';
-import parseFile from './parsers.js';
+import fs from 'fs';
+import yaml from 'js-yaml';
+import getFormatter from './formatters/index.js';
+
+const parseFile = (filepath) => {
+  const data = fs.readFileSync(filepath, 'utf-8');
+  const extension = path.extname(filepath).slice(1).toLowerCase();
+
+  if (extension === 'json') {
+    return JSON.parse(data);
+  }
+  if (extension === 'yml' || extension === 'yaml') {
+    return yaml.load(data);
+  }
+  throw new Error(`Unsupported file format: ${extension}`);
+};
+
+const isObject = (value) => value !== null && typeof value === 'object';
 
 const buildDiff = (obj1, obj2) => {
   const keys = new Set([...Object.keys(obj1), ...Object.keys(obj2)]);
   const sortedKeys = Array.from(keys).sort();
-  
+
   return sortedKeys.map((key) => {
+    const value1 = obj1[key];
+    const value2 = obj2[key];
+
     if (!Object.hasOwn(obj1, key)) {
-      return { key, type: 'added', value: obj2[key] };
+      return { key, type: 'added', value: value2 };
     }
     if (!Object.hasOwn(obj2, key)) {
-      return { key, type: 'removed', value: obj1[key] };
+      return { key, type: 'removed', value: value1 };
     }
-    if (obj1[key] !== obj2[key]) {
-      return { key, type: 'changed', oldValue: obj1[key], newValue: obj2[key] };
+    if (isObject(value1) && isObject(value2)) {
+      return { key, type: 'nested', children: buildDiff(value1, value2) };
     }
-    return { key, type: 'unchanged', value: obj1[key] };
+    if (value1 !== value2) {
+      return {
+        key, type: 'changed', oldValue: value1, newValue: value2,
+      };
+    }
+    return { key, type: 'unchanged', value: value1 };
   });
 };
 
-const formatStylish = (diff) => {
-  const lines = diff.map((node) => {
-    switch (node.type) {
-      case 'added':
-        return `  + ${node.key}: ${node.value}`;
-      case 'removed':
-        return `  - ${node.key}: ${node.value}`;
-      case 'changed':
-        return `  - ${node.key}: ${node.oldValue}\n  + ${node.key}: ${node.newValue}`;
-      case 'unchanged':
-        return `    ${node.key}: ${node.value}`;
-      default:
-        return '';
-    }
-  });
-  
-  return `{\n${lines.join('\n')}\n}`;
-};
-
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const absolutePath1 = path.resolve(process.cwd(), filepath1);
   const absolutePath2 = path.resolve(process.cwd(), filepath2);
-  
+
   const data1 = parseFile(absolutePath1);
   const data2 = parseFile(absolutePath2);
-  
+
   const diff = buildDiff(data1, data2);
-  
-  if (format === 'stylish') {
-    return formatStylish(diff);
-  }
-  
-  return formatStylish(diff);
+  const format = getFormatter(formatName);
+
+  return format(diff);
 };
 
 export default genDiff;

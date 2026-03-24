@@ -37,7 +37,7 @@ const parseYAML = (filepath) => {
  */
 const parseFile = (filepath) => {
   const extension = getFileExtension(filepath);
-  
+
   switch (extension) {
     case 'json':
       return parseJSON(filepath);
