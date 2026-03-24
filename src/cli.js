@@ -12,7 +12,7 @@ const runCLI = () => {
       try {
         const options = program.opts()
 
-        const addPrefix = (filepath) => {
+        const addPrefix = filepath => {
           if (
             filepath.startsWith('/')
             || filepath.startsWith('./')

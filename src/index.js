@@ -16,7 +16,7 @@ const parseFile = filepath => {
   throw new Error(`Unsupported file format: ${extension}`)
 }
 
-const isObject = value => value !== null && typeof value === 'object'
+const isObject = (value) => value !== null && typeof value === 'object'
 
 const buildDiff = (obj1, obj2) => {
   const keys = new Set([...Object.keys(obj1), ...Object.keys(obj2)])

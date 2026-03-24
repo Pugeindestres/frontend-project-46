@@ -1,6 +1,6 @@
-const isObject = value => value !== null && typeof value === 'object'
+const isObject = (value) => value !== null && typeof value === 'object'
 
-const formatValue = value => {
+const formatValue = (value) => {
   if (isObject(value)) {
     return '[complex value]'
   }
@@ -16,23 +16,23 @@ const formatPlain = (diff, parentPath = '') => {
   const lines = diff
     .filter((node) => node.type !== 'unchanged')
     .map((node) => {
-      const path = buildPath(parentPath, node.key);
+      const path = buildPath(parentPath, node.key)
 
       switch (node.type) {
         case 'added':
-          return `Property '${path}' was added with value: ${formatValue(node.value)}`;
+          return `Property '${path}' was added with value: ${formatValue(node.value)}`
         case 'removed':
-          return `Property '${path}' was removed`;
+          return `Property '${path}' was removed`
         case 'changed':
-          return `Property '${path}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
+          return `Property '${path}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`
         case 'nested':
-          return formatPlain(node.children, path);
+          return formatPlain(node.children, path)
         default:
-          return '';
+          return ''
       }
-    });
+    })
 
-  return lines.join('\n');
-};
+  return lines.join('\n')
+}
 
 export default formatPlain
